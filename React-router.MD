@@ -77,14 +77,27 @@ class Login extends React
 
 ### 3. Router 주요 컴포넌트
 * **Route**
+  ```javascript
+  <Route path = "주소규칙" component = {보여 줄 컴포넌트}
+  ```
 `component`, `render`, `children` 프로퍼티 중 하나 사용해 컴포넌트 출력.
-  * **component** : 라우터 공급자로부터 전달받은 모든 값을 프로퍼티로 전달해 출력.
+    * **component** : 라우터 공급자로부터 전달받은 모든 값을 프로퍼티로 전달해 출력.
   ```javascript
   <Router path = "/path" component = {MyComponent} />
   ```
    MyComponent 에 `location`, `history`, `match` 프로퍼티가 전달됨.
+   <!--
+	타입스크립트 사용 시,
+	location은
+	const location = useLocation();
+	params는
+	interface MatchProps {
+	username: 'velopert' | 'gildong';
+	}
+	const {username} = useParams();
+	-->
   
-  * **render** : render 프로퍼티는 render 함수를 구성.
+    * **render** : render 프로퍼티는 render 함수를 구성.
   특정 프로퍼티 사용하고 싶다면
   ```javascript
   <Route path = "/path" render = {props => <MyComponent{...props}/>}
@@ -98,10 +111,10 @@ class Login extends React
     /Route>}
     ```
     일 경우, 주소가 `/someurl` 일 경우에만 MyComponent 출력.
-  * **children** : 자식 프로퍼티 형태로 출력.
+    * **children** : 자식 프로퍼티 형태로 출력.
 
 
-  * Router 컴포넌트가 출력하는 프로퍼티
+    * Router 컴포넌트가 출력하는 프로퍼티
     * `match` : 현재 루트에 정의된 경로와 일치한 주소 정보
     * `location` : 브라우저 라우터의 경우 window.location 의 정보 전달.
     * `history` : 페이지 이동 기록 정보. 페이지 앞뒤로 이동할 수도 있음.
@@ -120,6 +133,9 @@ class Login extends React
 * **Link**
 경로 변경하는 컴포넌트. 주소와 리액트 라우터 정보면 변경시키기 때문에 **새로고침 현상 방지할 때** 사용.
 *ReactDOM 으로 render 시키면 <Link> 컴포넌트는 <a> 태그로 바뀐다.*
+```javascript
+	<Link to = "주소"> 내용 </Link>
+```
 
 
 * 정리해서 말해보자면,
@@ -134,3 +150,23 @@ class Login extends React
 ```javascript
 {isFinished && <Redirect to = "/home" />}
 ```
+
+
+
+## ③ 파라미터/쿼리
+페이지 주소 정의하는 방법은 파라미터/쿼리 사용 가능.
+```
+파라미터 : /profiles/me
+쿼리 : /about?details = true
+```
+일반적으로,
+**파라미터** : 특정 `id`, `이름`으로 조회
+**쿼리** : 어떤 `키워드`를 갖고 검색 및 요청
+
+
+## ④ 서브라우트
+탭 처럼 사용 가능.
+https://react.vlpt.us/react-router/03-subroutes.html
+
+
+
