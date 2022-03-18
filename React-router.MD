@@ -64,14 +64,73 @@ class Login extends React
 -----------------------------------------------
 ## ② 리액트 라우터 구성
 
-5종류 라우터 있음. 우리는 웹개발로 갈거니 BrowserRouter 사용.
+* 5종류 라우터 있음. 우리는 웹개발로 갈거니 BrowserRouter 사용.
+
+* **`라우팅(Routing)`** : 다른 주소에 따라 다른 뷰를 보여주는 과정.
+    *"경로에 따라 변경한다"*  라는 의미.
 
 ### 1. 설치
-	```
 	yarn add react-router-dom
-	```
 ### 2. 적용방법
 `src/index.js` 파일에서 `react-router-dom`에 내장되어 있는 **BrowserRouter** 라는 컴포넌트 사용해 감싸면 됨.
 웹 APP에 HTML5 의 History 를 사용하여 페이지 새로고침 하지 않아도, 주소 변경/현 주소 관련 정보(match, location, history) 조회 및 사용 가능.
 
-### 3. 
+### 3. Router 주요 컴포넌트
+* **Route**
+`component`, `render`, `children` 프로퍼티 중 하나 사용해 컴포넌트 출력.
+  * **component** : 라우터 공급자로부터 전달받은 모든 값을 프로퍼티로 전달해 출력.
+  ```javascript
+  <Router path = "/path" component = {MyComponent} />
+  ```
+   MyComponent 에 `location`, `history`, `match` 프로퍼티가 전달됨.
+  
+  * **render** : render 프로퍼티는 render 함수를 구성.
+  특정 프로퍼티 사용하고 싶다면
+  ```javascript
+  <Route path = "/path" render = {props => <MyComponent{...props}/>}
+  </Route>
+  ```
+  와 같이 사용해야함.
+  
+    조건식 사용할 때,
+	```javascript
+    <Route path = "*" render = {props => props.match.url === "/someurl" && <MyComponent {...props}/>
+    /Route>}
+    ```
+    일 경우, 주소가 `/someurl` 일 경우에만 MyComponent 출력.
+  * **children** : 자식 프로퍼티 형태로 출력.
+
+
+  * Router 컴포넌트가 출력하는 프로퍼티
+    * `match` : 현재 루트에 정의된 경로와 일치한 주소 정보
+    * `location` : 브라우저 라우터의 경우 window.location 의 정보 전달.
+    * `history` : 페이지 이동 기록 정보. 페이지 앞뒤로 이동할 수도 있음.
+
+* **Switch**
+자식으로 배치된 Route 컴포넌트 중 처음으로 조건 만족한 하나의 컴포넌트만 출력해준다.
+```javascript
+<Switch>
+  <Route path = "/login" component = {Login} />
+  <Route path = "/" component = {Index} />
+</Switch>
+```
+  해당 코드일 경우, `/login` 이라는 주소가 입력될 때, 첫번째 컴포넌트만 출력.
+  만약 Switch 가 없다면, 두 컴포넌트 모두 출력.
+
+* **Link**
+경로 변경하는 컴포넌트. 주소와 리액트 라우터 정보면 변경시키기 때문에 **새로고침 현상 방지할 때** 사용.
+*ReactDOM 으로 render 시키면 <Link> 컴포넌트는 <a> 태그로 바뀐다.*
+
+
+* 정리해서 말해보자면,
+  * `Switch`, `Route` : 경로 매칭.
+  Switch는 감싸진 여러 <Route> 중 경로 일치하는 단 하나만 렌더링.
+  Route 는 path 속성 지정하여, 해당 path 에 어떤 컴포넌트 보여줄지 정하는 역할. (<Link> 가 정해주는 URL 경로와 일치하는 경우에만 작동)
+  * `Link` : 페이지 새로고침 하지 않고, 경로 변경하는 역할.
+  
+  
+* **Redirect**
+특정 조건에서 바로 페이지 이동 해야 하는 경우 사용.
+```javascript
+{isFinished && <Redirect to = "/home" />}
+```
