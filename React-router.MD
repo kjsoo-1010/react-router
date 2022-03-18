@@ -86,7 +86,7 @@ class Login extends React
   <Route path = "주소규칙" component = {보여 줄 컴포넌트}
   ```
 `component`, `render`, `children` 프로퍼티 중 하나 사용해 컴포넌트 출력.
-    * **component** : 라우터 공급자로부터 전달받은 모든 값을 프로퍼티로 전달해 출력.
+ * **component** : 라우터 공급자로부터 전달받은 모든 값을 프로퍼티로 전달해 출력.
   ```javascript
   <Router path = "/path" component = {MyComponent} />
   ```
@@ -102,27 +102,26 @@ class Login extends React
 	const {username} = useParams();
 	-->
   
-    * **render** : render 프로퍼티는 render 함수를 구성.
+  * **render** : render 프로퍼티는 render 함수를 구성.
   특정 프로퍼티 사용하고 싶다면
   ```javascript
   <Route path = "/path" render = {props => <MyComponent{...props}/>}
   </Route>
   ```
   와 같이 사용해야함.
-  
-    조건식 사용할 때,
-	```javascript
+  조건식 사용할 때,
+  ```javascript
     <Route path = "*" render = {props => props.match.url === "/someurl" && <MyComponent {...props}/>
     /Route>}
-    ```
-    일 경우, 주소가 `/someurl` 일 경우에만 MyComponent 출력.
-    * **children** : 자식 프로퍼티 형태로 출력.
+  ```
+일 경우, 주소가 `/someurl` 일 경우에만 MyComponent 출력.
+* **children** : 자식 프로퍼티 형태로 출력.
 
 
-    * Router 컴포넌트가 출력하는 프로퍼티
-    * `match` : 현재 루트에 정의된 경로와 일치한 주소 정보
-    * `location` : 브라우저 라우터의 경우 window.location 의 정보 전달.
-    * `history` : 페이지 이동 기록 정보. 페이지 앞뒤로 이동할 수도 있음.
+* Router 컴포넌트가 출력하는 프로퍼티
+* `match` : 현재 루트에 정의된 경로와 일치한 주소 정보
+* `location` : 브라우저 라우터의 경우 window.location 의 정보 전달.
+* `history` : 페이지 이동 기록 정보. 페이지 앞뒤로 이동할 수도 있음.
 
 * **Switch**
 자식으로 배치된 Route 컴포넌트 중 처음으로 조건 만족한 하나의 컴포넌트만 출력해준다.
